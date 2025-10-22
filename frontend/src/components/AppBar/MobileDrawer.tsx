@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 interface MobileDrawerProps {
   isOpen?: boolean;
 }
-const pages = ["pokedex", "pokeguess", "about", "contact"] as const;
+const pages = ["pokedex", "pokeguess"] as const;
 export const MobileDrawer = ({ isOpen }: MobileDrawerProps) => {
   return (
     <div
@@ -30,7 +30,7 @@ export const MobileDrawer = ({ isOpen }: MobileDrawerProps) => {
         </ul>
         <div className="">
           <Link
-            to="/login"
+            to="/signin"
             className="px-4 py-1.5 text-sm uppercase font-semibold rounded-full border-2 border-[var(--clr-red-main)] hover:border-[var(--clr-red-dark)] transition-all duration-100 block "
           >
             sign in

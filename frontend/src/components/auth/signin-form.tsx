@@ -34,7 +34,7 @@ export function SignInForm({
     // Handle form submission logic here
     const { username, password } = data;
     await signIn(username, password);
-    navigate("/");
+    navigate("/pokedex");
   };
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -67,7 +67,7 @@ export function SignInForm({
                 <Input
                   id="username"
                   type="text"
-                  placeholder=""
+                  placeholder="Your username"
                   {...register("username")}
                 />
                 {errors.username && (
@@ -84,7 +84,7 @@ export function SignInForm({
                 <Input
                   id="password"
                   type="password"
-                  placeholder=""
+                  placeholder="Your password"
                   {...register("password")}
                 />
                 {errors.password && (

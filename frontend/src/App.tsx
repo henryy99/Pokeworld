@@ -27,8 +27,6 @@ export const App = () => {
             <Route path="/pokedex" element={<Pokedex />} />
             <Route path="/pokeguess/play" element={<Pokeguess />} />
             <Route path="/" element={<Homepage />} />
-            <Route path="/about" element={<div>About</div>} />
-            <Route path="/contact" element={<div>Contact</div>} />
           </Route>
         </Routes>
       </BrowserRouter>

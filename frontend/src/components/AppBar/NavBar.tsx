@@ -2,11 +2,13 @@ import { useState } from "react";
 import { FaBars } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { MobileDrawer } from "./MobileDrawer";
+import { useAuthStore } from "@/stores/useAuthStore";
 
-const pages = ["pokedex", "pokeguess", "about", "contact"] as const;
+const pages = ["pokedex", "pokeguess"] as const;
 
 export const NavBar = () => {
   const [toggleDrawer, setToggleDrawer] = useState(false);
+  const { user, loading } = useAuthStore();
 
   return (
     <header className=" bg-transparent shadow-md t-[var(--font-roboto)] text-[var(--clr-red)] py-2 flex items-center gap-15 md:pr-4 justify-between px-2 relative z-1">
@@ -33,12 +35,31 @@ export const NavBar = () => {
         </ul>
       </nav>
       {/*Sign in button for desktop*/}
-      <Link
-        to="/signin"
-        className="md:ml-auto  px-4 py-1.5 text-sm uppercase font-semibold rounded-full border-2 border-[var(--clr-red-main)] hover:border-[var(--clr-green-main)] transition-all duration-100 hidden md:block "
-      >
-        sign in
-      </Link>
+      <div className="md:ml-auto   text-sm uppercase font-semibold transition-all duration-100 hidden md:block">
+        {loading && <p>Loading...</p>}
+        {!user && !loading && (
+          <div className="flex gap-5">
+            <Link
+              to="/signin"
+              className="rounded-full border-2 border-[var(--clr-red-main)] hover:border-[var(--clr-green-main)] px-4 py-1.5"
+            >
+              sign in
+            </Link>
+
+            <Link
+              to="/signup"
+              className="rounded-full border-2 border-[var(--clr-red-main)] hover:border-[var(--clr-green-main)] px-4 py-1.5"
+            >
+              sign up
+            </Link>
+          </div>
+        )}
+        {user && !loading && (
+          <div className="px-4 py-1.5 border-2 rounded-full border-torch-red-600">
+            <p className="tracking-wider">{user.username}</p>
+          </div>
+        )}
+      </div>
 
       {/*Hamburger menu for mobile*/}
       <button
