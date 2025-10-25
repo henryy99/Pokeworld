@@ -11,7 +11,7 @@ export const NavBar = () => {
   const { user, loading } = useAuthStore();
 
   return (
-    <header className=" bg-transparent shadow-md t-[var(--font-roboto)] text-[var(--clr-red)] py-2 flex items-center gap-15 md:pr-4 justify-between px-2 relative z-1">
+    <header className=" bg-white shadow-md  py-2 flex items-center gap-15 md:pr-4 justify-between px-2 relative z-1 ">
       {/*Create a blur background for content*/}
       <div
         className={`fixed inset-0 bg-black/40 backdrop-blur-xs ${

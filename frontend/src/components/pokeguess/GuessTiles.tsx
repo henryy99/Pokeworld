@@ -19,7 +19,7 @@ function Line({ state, guess, isCurrentGuess }) {
   return <div className="line flex gap-2">{tiles}</div>;
 }
 
-function PokedexBody() {
+function GuessTiles() {
   const { state, dispatch } = usePokemon();
 
   return (
@@ -41,4 +41,4 @@ function PokedexBody() {
   );
 }
 
-export default PokedexBody;
+export default GuessTiles;

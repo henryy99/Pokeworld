@@ -45,7 +45,7 @@
 }
 
 @theme {
-  --font-pixel: var(--font-pokemon-ui);
+  --font-pokemon: var(--font-pokemon-ui);
   --font-fredoka: var(--font-fredoka);
 
   --color-torch-red-50: #fef2f2;
@@ -176,4 +176,8 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.test {
+  font-family: "Press Start 2P", cursive;
 }

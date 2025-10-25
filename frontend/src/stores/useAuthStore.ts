@@ -10,6 +10,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
   clearState: () => set({ accessToken: null, user: null, loading: false }),
   setAccessToken: (token) => set({ accessToken: token }),
+  getUsername: () => {
+    const { user } = get();
+    return user ? user.username : "Guest";
+  },
   signUp: async (username, password, email, displayName) => {
     try {
       set({ loading: true });

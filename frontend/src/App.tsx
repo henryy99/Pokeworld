@@ -8,6 +8,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import { Toaster } from "sonner";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import PokeguessPlay from "./pages/PokeguessPlay";
 export const App = () => {
   return (
     <>
@@ -25,7 +26,7 @@ export const App = () => {
             {/* Protected routes */}
             <Route path="/pokeguess" element={<Pokeguess />} />
             <Route path="/pokedex" element={<Pokedex />} />
-            <Route path="/pokeguess/play" element={<Pokeguess />} />
+            <Route path="/pokeguess/play" element={<PokeguessPlay />} />
             <Route path="/" element={<Homepage />} />
           </Route>
         </Routes>
