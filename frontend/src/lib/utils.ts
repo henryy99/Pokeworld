@@ -24,3 +24,36 @@ export const getRandomProfilePicture = () => {
   ];
   return path[Math.floor(Math.random() * path.length)];
 };
+
+export function getTileClass(
+  char: string,
+  index: number,
+  pokemonName: string,
+  isCurrentGuess: boolean
+) {
+  if (!char || isCurrentGuess) return "bg-gray-100 border-2 "; // optional fallback
+  if (char === pokemonName[index]) return "bg-green-main border-0";
+  if (pokemonName.includes(char)) return "bg-yellow-main border-0";
+  if (!pokemonName.includes(char) && char !== "") return "bg-red-main border-0";
+  return "bg-main-red"; // optional fallback
+}
+
+export const getKeyClass = (
+  guessedPokemon: string[],
+  pokemonName: string,
+  char: string
+) => {
+  const allGuesses = guessedPokemon.filter(Boolean).join("").toUpperCase();
+
+  if (!allGuesses.includes(char)) return "";
+
+  const isCorrectSpot = guessedPokemon.some(
+    (guess) =>
+      guess && [...guess].some((c, i) => c === char && pokemonName[i] === char)
+  );
+  if (isCorrectSpot) return "bg-green-main";
+
+  if (pokemonName.includes(char)) return "bg-yellow-main";
+
+  return "bg-red-main";
+};

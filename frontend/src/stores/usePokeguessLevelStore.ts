@@ -4,9 +4,10 @@ import type { PokeguessLevelState } from "@/types/store";
 import { toast } from "sonner";
 import { create } from "zustand";
 
+const MAX_ATTEMPTS = 5;
 export const usePokeguessLevelStore = create<PokeguessLevelState>(
   (set, get) => ({
-    wrongGuessesLeft: 3,
+    wrongGuessesLeft: MAX_ATTEMPTS,
     guessedPokemon: Array(5).fill(null),
     hints: {
       "type 1": "",
@@ -14,9 +15,10 @@ export const usePokeguessLevelStore = create<PokeguessLevelState>(
       weight: null,
       order: null,
     },
-    isGameOver: false,
+    isLevelOver: false,
     pokemon: null,
     isLoading: false,
+    currentGuessIndex: 0,
 
     setHints: (pokemon: PokemonInfo) => {
       const hints = {
@@ -26,6 +28,9 @@ export const usePokeguessLevelStore = create<PokeguessLevelState>(
         order: pokemon.order || 0,
       };
       set({ hints });
+    },
+    getPokemonName: () => {
+      return get().pokemon?.name || "";
     },
     generateRandomPokemon: async () => {
       // Implementation to fetch and set a new Pokemon
@@ -41,19 +46,49 @@ export const usePokeguessLevelStore = create<PokeguessLevelState>(
         set({ isLoading: false });
       }
     },
-    makeGuess: (pokemonName: string) => {},
+    makeGuess: (pokemonName: string) => {
+      set((state) => {
+        //
+        const updatedGuesses = [...state.guessedPokemon];
+        //Guess need to update
+        updatedGuesses[state.currentGuessIndex] = pokemonName; // update specific index
+        //get the correct pokemon name then check if it is correct
+        const correctPokemon = state.pokemon?.name;
+        const isCorrect = pokemonName === correctPokemon;
+
+        //get the wrong guesses left
+        const newWrongGuessesLeft = isCorrect
+          ? state.wrongGuessesLeft
+          : state.wrongGuessesLeft - 1;
+        console.log(isCorrect);
+
+        return {
+          guessedPokemon: updatedGuesses,
+          wrongGuessesLeft: newWrongGuessesLeft,
+          isLevelOver: isCorrect || !newWrongGuessesLeft,
+          currentGuessIndex: state.currentGuessIndex + 1,
+        };
+      });
+    },
+    setLevelOver: () => {
+      set({ isLevelOver: true });
+      console.log(get().isLevelOver);
+      return;
+    },
+
     resetGuesses: () =>
       set({
-        wrongGuessesLeft: 3,
-        guessedPokemon: [],
+        wrongGuessesLeft: MAX_ATTEMPTS,
+        guessedPokemon: Array(5).fill(null),
         hints: {
           "type 1": "",
           "type 2": "",
           weight: null,
           order: null,
         },
-        isGameOver: false,
+        isLevelOver: false,
         pokemon: null,
+        currentGuessIndex: 0,
       }),
   })
 );

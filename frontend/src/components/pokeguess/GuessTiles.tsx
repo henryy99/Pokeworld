@@ -1,14 +1,24 @@
-import { usePokemon } from "../context/PokemonContext";
-import { getTileClass } from "../utils/helpers";
-function Line({ state, guess, isCurrentGuess }) {
+import { getTileClass } from "@/lib/utils";
+import { usePokeguessLevelStore } from "@/stores/usePokeguessLevelStore";
+import { useTypedGuessStore } from "@/stores/useTypedGuess";
+
+function Line({
+  isCurrentGuess,
+  guess,
+  pokemonName,
+}: {
+  isCurrentGuess: boolean;
+  guess: string;
+  pokemonName: string;
+}) {
   const tiles = [];
 
-  for (let i = 0; i < state.pokemonName.length; i++) {
+  for (let i = 0; i < pokemonName.length; i++) {
     const char = guess[i];
-    const className = getTileClass(char, i, state, isCurrentGuess);
+    const className = getTileClass(char, i, pokemonName, isCurrentGuess);
     tiles.push(
       <span
-        className={`bg-[#e3e3e1] w-10 h-10  flex items-center justify-center border-1 border-${className} border-gray-200 rounded-sm text-2xl font-bold md:w-20 md:h-20 md:text-4xl ${className} transition-all duration-500`}
+        className={`bg-[#e3e3e1] w-8 h-8  flex items-center justify-center border-1 border-${className} border-gray-200 rounded-sm text-2xl font-bold md:w-20 md:h-20 md:text-4xl ${className} transition-all duration-500`}
         key={i}
       >
         {char ? char.toUpperCase() : ""}
@@ -20,20 +30,21 @@ function Line({ state, guess, isCurrentGuess }) {
 }
 
 function GuessTiles() {
-  const { state, dispatch } = usePokemon();
+  const { guessedPokemon, currentGuessIndex, getPokemonName } =
+    usePokeguessLevelStore();
+  const pokemonName = getPokemonName();
+  const { typedGuess } = useTypedGuessStore();
+  console.log("reredner guess itles");
 
   return (
     <div className="flex flex-col gap-2 items-center justify-center mb-[20px]">
-      {state.guesses.map((guess, index) => {
+      {guessedPokemon.map((guess, index) => {
         return (
           <Line
             key={index}
-            state={state}
-            dispatch={dispatch}
-            guess={
-              state.currentGuessIndex === index ? state.typedGuess : guess ?? ""
-            }
-            isCurrentGuess={state.currentGuessIndex === index}
+            guess={currentGuessIndex === index ? typedGuess : guess ?? ""}
+            isCurrentGuess={(currentGuessIndex === index) as boolean}
+            pokemonName={pokemonName}
           />
         );
       })}

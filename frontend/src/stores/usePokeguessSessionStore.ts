@@ -16,6 +16,10 @@ export const usePokeguessSessionStore = create<PokeguessSessionState>(
       set((state) => ({
         level: state.level + 1,
       })),
+    decrementHealth: () =>
+      set((state) => ({
+        health: state.health - 1,
+      })),
     resetGame: () =>
       set({
         score: 0,

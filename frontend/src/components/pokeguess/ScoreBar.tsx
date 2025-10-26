@@ -1,16 +1,25 @@
 import { getRandomProfilePicture } from "@/lib/utils";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { usePokeguessSessionStore } from "@/stores/usePokeguessSessionStore";
-import React from "react";
+
 import { Button } from "../ui/button";
+import { usePokeguessLevelStore } from "@/stores/usePokeguessLevelStore";
 
 const ScoreBar = () => {
-  const { getUsername } = useAuthStore();
+  const getUsername = useAuthStore.getState().getUsername;
+  const generateRandomPokemon =
+    usePokeguessLevelStore.getState().generateRandomPokemon;
+  const isLevelOver = usePokeguessLevelStore.getState().isLevelOver;
+  const resetGuesses = usePokeguessLevelStore.getState().resetGuesses;
   const { score: currentScore, health } = usePokeguessSessionStore();
+  console.log("rerender score");
+
+  const handleNextLevel = async () => {
+    resetGuesses();
+    await generateRandomPokemon();
+  };
   return (
-    <div
-      className={`p border-b-2 border-black pb-3 flex text-2xl justify-between  `}
-    >
+    <div className={` pb-3 flex text-2xl justify-between  `}>
       <div className="flex max-w-[1000px] mx-auto w-full  justify-between pl-2 pr-5 items-center">
         <div className="flex gap-5 items-center">
           <img
@@ -49,7 +58,8 @@ const ScoreBar = () => {
         <Button
           className="rounded-full px-6 font-pokemon"
           variant={"destructive"}
-          disabled={true}
+          disabled={!isLevelOver}
+          onClick={handleNextLevel}
         >
           Next
         </Button>

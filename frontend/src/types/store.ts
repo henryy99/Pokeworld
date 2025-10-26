@@ -29,18 +29,29 @@ export interface PokeguessSessionState {
   incrementScore: (points: number) => void;
   nextLevel: () => void;
   resetGame: () => void;
+  decrementHealth: () => void;
 }
 //Pokeguess Guess State Interface
 export interface PokeguessLevelState {
   wrongGuessesLeft: number;
   guessedPokemon: string[];
   hints: Hints;
-  isGameOver: boolean;
+  isLevelOver: boolean;
   isLoading: boolean;
   pokemon: null | PokemonInfo;
+  currentGuessIndex: number;
 
   generateRandomPokemon: () => Promise<void>;
   makeGuess: (pokemonName: string) => void;
   resetGuesses: () => void;
+  getPokemonName: () => string;
   setHints: (pokemon: PokemonInfo) => void;
+  setLevelOver: () => void;
+}
+
+export interface TypedGuess {
+  typedGuess: string;
+  removeLastChar: () => void;
+  addChar: (letter: string) => void;
+  resetTypedGuess: () => void;
 }
