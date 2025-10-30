@@ -40,7 +40,8 @@ function Keyboard() {
       const isCorrect = typed.toLowerCase() === pokemonName;
 
       //add guess to store and reset typed guess
-      makeGuess(typed);
+      makeGuess(typed.toLowerCase());
+
       resetTypedGuess();
 
       //if answer is correct go to next level

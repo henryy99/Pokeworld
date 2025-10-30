@@ -60,7 +60,6 @@ export const usePokeguessLevelStore = create<PokeguessLevelState>(
         const newWrongGuessesLeft = isCorrect
           ? state.wrongGuessesLeft
           : state.wrongGuessesLeft - 1;
-        console.log(isCorrect);
 
         return {
           guessedPokemon: updatedGuesses,
@@ -72,7 +71,6 @@ export const usePokeguessLevelStore = create<PokeguessLevelState>(
     },
     setLevelOver: () => {
       set({ isLevelOver: true });
-      console.log(get().isLevelOver);
       return;
     },
 

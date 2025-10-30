@@ -178,6 +178,12 @@
   }
 }
 
-.test {
-  font-family: "Press Start 2P", cursive;
+.game-level-over::before {
+  content: "s";
+  width: 100%;
+  position: absolute;
+  height: 100vh;
+  background: var(--color-torch-red-100);
+  opacity: 0.3;
+  z-index: 20;
 }

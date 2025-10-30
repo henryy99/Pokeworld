@@ -16,7 +16,7 @@ const PokeguessPlay = () => {
     init();
   }, []);
   return (
-    <div className="w-full md:max-w-4xl h-screen border-1 mx-auto font-pokemon flex flex-col">
+    <div className="w-full  h-screen border-1 mx-auto font-pokemon flex flex-col relative justify-around">
       {pokemon && (
         <>
           <ScoreBar />

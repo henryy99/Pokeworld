@@ -12,40 +12,40 @@ const ScoreBar = () => {
   const isLevelOver = usePokeguessLevelStore.getState().isLevelOver;
   const resetGuesses = usePokeguessLevelStore.getState().resetGuesses;
   const { score: currentScore, health } = usePokeguessSessionStore();
-  console.log("rerender score");
-
+  const pokemon = usePokeguessLevelStore.getState().pokemon;
   const handleNextLevel = async () => {
     resetGuesses();
     await generateRandomPokemon();
   };
   return (
-    <div className={` pb-3 flex text-2xl justify-between  `}>
-      <div className="flex max-w-[1000px] mx-auto w-full  justify-between pl-2 pr-5 items-center">
-        <div className="flex gap-5 items-center">
-          <img
-            src={getRandomProfilePicture()}
-            alt="random"
-            className="w-14 h-14 border-2 rounded-full bg-red-100"
-          />
-          <div className="space-y-1">
-            <h1 className="text-lg">{getUsername()}</h1>
-            <h4 className=" text-xs">Score: {currentScore} </h4>
-            <div className="flex gap-1">
-              {Array(health)
-                .fill(null)
-                .map((_, i) => (
-                  <img
-                    key={i}
-                    src="https://img.itch.zone/aW1nLzU4MTg3MjYucG5n/315x250%23c/pMCFlc.png"
-                    alt=""
-                    className="w-5"
-                  />
-                ))}
+    <>
+      <div className={` pb-3 flex text-2xl justify-between  `}>
+        <div className="flex md:max-w-2xl mx-auto w-full  justify-between pl-2 pr-5 items-center">
+          <div className="flex gap-5 items-center">
+            <img
+              src={getRandomProfilePicture()}
+              alt="random"
+              className="w-14 h-14 border-2 rounded-full bg-red-100"
+            />
+            <div className="space-y-1">
+              <h1 className="text-lg">{getUsername()}</h1>
+              <h4 className=" text-xs">Score: {currentScore} </h4>
+              <div className="flex gap-1">
+                {Array(health)
+                  .fill(null)
+                  .map((_, i) => (
+                    <img
+                      key={i}
+                      src="https://img.itch.zone/aW1nLzU4MTg3MjYucG5n/315x250%23c/pMCFlc.png"
+                      alt=""
+                      className="w-5"
+                    />
+                  ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* <button
+          {/* <button
           className={`${
             isGameOver && health > 0
               ? "opacity-100 translate-x-0"
@@ -55,16 +55,37 @@ const ScoreBar = () => {
         >
           Next
         </button> */}
-        <Button
-          className="rounded-full px-6 font-pokemon"
-          variant={"destructive"}
-          disabled={!isLevelOver}
-          onClick={handleNextLevel}
-        >
-          Next
-        </Button>
+          <Button
+            className="rounded-full px-6 font-pokemon"
+            variant={"destructive"}
+            disabled={!isLevelOver}
+            onClick={handleNextLevel}
+          >
+            Next
+          </Button>
+        </div>
       </div>
-    </div>
+      {isLevelOver && (
+        <div className="game-level-over w-full h-screen absolute flex items-center">
+          <div className="md:max-w-3xl w-full bg-white mx-auto rounded-md text-center space-y-10 py-4 z-100 shadow-2xl">
+            <h1>Is correct</h1>
+            <img
+              src={pokemon?.imageUrl}
+              alt="pokemon image"
+              className="mx-auto w-40"
+            />
+            <Button
+              className="rounded-full px-6 font-pokemon"
+              variant={"destructive"}
+              disabled={!isLevelOver}
+              onClick={handleNextLevel}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
